@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+        <script src="todo.js" defer></script>
+    </head>
+    <body>
+    <style>
+        .panel {
+            background-color: #31d2f2;
+            height: 50vh;
+            width: 100vw;
+        }
+        h1 {
+            font-size: 30px;
+            background-color: red;
+        }
+        .menuDiv {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+        }
+    </style>
+    <div class="menuDiv">
+        <a href="#addPanel">ADD</a>
+        <a href="#listPanel">LIST</a>
+        <a href="#readPanel">READ</a>
+    </div>
+    <div class="panel" id="addPanel">
+        <h1>ADD</h1>
+        <!--제목/ 내용 / 완료여부(체크박스)/날짜-->
+        <div>
+            <label>제목</label>
+            <input type="text" name="title" size="50" value="새로운 할일">
+        </div>
+        <div>
+            <label>내용</label>
+            <!--                긴 글자가 들어 올때는 input 말고 textarea 를 사용한다.-->
+            <textarea name="content" cols="50" rows="5">할일의 내용은 ?</textarea>
+        </div>
+        <div>
+            <label>날짜</label>
+            <input type="date" name="dueDate" size="50" value="2021-11-16">
+        </div>
+        <div>
+            <label>저장</label>
+            <button onclick="saveTodo()">save</button>
+        </div>
+    </div>
+    <div class="panel" id="listPanel">
+        <style>
+            table {
+                border: 1px solid black;
+                width: 90vw;
+            }
+            table  td:first-child {
+                width: 10vw;
+            }
+            table  td:nth-child(2) {
+                width: 10vw;
+            }
+            table  td:nth-child(3) {
+                width: 60vw;
+            }
+            table  td:nth-child(4) {
+                width: 10vw;
+            }
+        </style>
+        <h1>LIST</h1>
+        <table>
+            <thead>
+            <td onclick="checkAll()">전체선택</td>
+            <td>번호</td>
+            <td>제목</td>
+            <td>날짜</td>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="checkbox" name="complete"></td>
+                <td>1</td>
+                <td>AAAA</td>
+                <td>2021-12-22</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel" id="readPanel">
+        <h1>READ</h1>
+    </div>
+    <script>
+        function saveTodo() {
+            const titleEl = document.querySelector("input[name='title']")
+            const contentEl = document.querySelector("textarea[name='content']")
+            const dueDateEL = document.querySelector("input[name='dueDate']")
+
+            const title = titleEl.value
+            const content = contentEl.value
+            const dueDate = dueDateEL.value
+            const complete = false
+
+            todoService.add({title,content,dueDate,complete})
+            console.log(todoService.getAll())
+        }
+    </script>
+    </body>
+</html>
